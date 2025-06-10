@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8" />
+    <title>Login Node.js</title>
+</head>
+<body>
+    <h1>Connexion</h1>
+    <form action="login" method="post">
+        <% if (typeof erreurs !="undefined" ) { %>
+            <p>
+                <%= erreurs %>
+            </p>
+            <% } %>
+                <p>
+                    <label for="login">Login : </label>
+                    <input type="text" id="login" name="login" />
+                </p>
+                <p>
+                    <label for="password">Mot de passe : </label>
+                    <input type="password" id="password" name="password" />
+                </p>
+                <p>
+                    <input type="submit" value="Connection">
+                </p>
+    </form>
+</body>
+</html>
