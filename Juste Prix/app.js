@@ -14,7 +14,7 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Création session
-app.use(session({secret: 'secretpass'}));
+app.use(session({secret:'secretpass'}));
 
 //Lancement formulaire
 app.get('/', (req, res) => {
@@ -23,19 +23,37 @@ app.get('/', (req, res) => {
 })
 
 
+
+
+//Lancement du jeu
+app.get('/game', (req, res) => {
+    console.log('SESSION playerTwo:', req.session.playerTwo);
+    res.render('game',
+        {
+            playerTwo: req.session.playerTwo,
+            objectName: req.session.objectName,
+            objectValue: req.session.objectvalue,
+            hight: false,
+            low: false,
+            equal:  false,
+            essais: 0
+        }
+    )
+});
+
 //Traitement du formulaire Login
-app.post('/', (req, res) => {
+app.post('/game/add', (req, res) => {
     //récupération de données (req. body et pas params)
-    let playerOne= req.body.playerTwo;
+    let playerOne= req.body.playerOne;
     let playerTwo = req.body.playerTwo;
     let objectName = req.body.objectName;
     let objectValue = req.body.objectValue;
-    if(playerOne == ""  || playerTwo == "" || objectName == "" || objectValue == ""){
-        res.render('/',
-            {
-                erreurs: 'Remplir tous les chammps'
-            }
-        )
+    
+
+    if(!playerOne   || !playerTwo || !objectName || !objectValue){
+        return res.render('form',{
+                    erreurs: 'Remplir tous les chammps'
+        });
     }else{
         //Enregistre les données saisies dans la session
         req.session.playerOne = playerOne;
@@ -44,37 +62,44 @@ app.post('/', (req, res) => {
         req.session.objectValue = objectValue;
     }
     //Redirect sur la page du jeu 
-    res.redirect('/game/add/');
+        res.redirect('/game');
 });
 
-//Lancement du jeu
-app.get('/game/add', (req, res) => {
+app.post('/game/check', (req, res) => {
+     //Récupération de la proposition du playerTwo
+    let guess = req.body.newTry;
+    //Comparaison proposition et bonne réponse
+    let goodResponse = req.session.objectValue;
+    let result = "";
+
+    // Initialisation à False pour les resultats
+    req.session.hight = false;
+    req.session.low = false;
+    req.session.equal = false;
+    req.session.essais = 0
+
+    if(guess<goodResponse) {
+        req.session.hight = true;
+        req.session.essais += 1;
+    }else if(guess>goodResponse){
+        req.session.low = true;
+        req.session.essais += 1;
+    }else if(guess == goodResponse){
+        req.session.equal = true;
+        req.session.essais += 1;
+    };
     res.render('game',
         {
-            playerTwo: req.session.playerTwo
+            playerTwo: req.session.playerTwo,
+            objectName: req.session.objectName,
+            objectValue: req.session.objectvalue,
+            hight: req.session.hight,
+            low: req.session.low,
+            equal:  req.session.equal,
+            essais: req.session.essais
         }
     )
 });
-
-app.post('/game/add', (req, res) => {
-    //Récupération de la proposition du playerTwo
-    let guess = req.body.newTry;
-    //Comparaison proposition et bonne réponse
-
-    let goodResponse = req.session.game.objectValue;
-    let result = ""
-    if(guess>goodResponse) {
-        result = 'high'
-    }else if(guess<goodResponse){
-        result = 'low'
-
-    }else if(guess == goodResponse){
-        result = 'equal'
-
-    }
-    return result;
-});
-
 
 //Gestion d'erreur  URL - !!ordre(middleware)
 app.use((req, res) => {

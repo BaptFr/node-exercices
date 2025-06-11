@@ -20,7 +20,7 @@
             <form action="/game/check/" method="post" class="card-body" id="formPlayGame">
 
                 <div class="mb-4" id="info">
-                    Bonjour , <%= playerTwo %> vous devez trouver la valeur de l'objet suivant en un minimum de tentatives: 
+                    Bonjour , <%= playerTwo %> vous devez trouver la valeur de l'objet: <%= objectName %> suivant en un minimum de tentatives: 
                 </div>
 
                 <div class="input-group mb-3">
@@ -29,9 +29,9 @@
                 </div>
 
                 <div id="tries">
-                    <p class="alert-warning" dipay = hidden> La valeur de l'objet est plus haute</p>
-                    <p class="alert-warning">  La valeur de l'objet est plus basse</p>
-                    <p class="alert-success"> Félicitations ! Tu as trouvé la bonne valeur en seulement tentative(s)</p>
+                    <p class="alert-warning" <% if (!hight) { %> hidden <% } %> > La valeur de l'objet est plus haute</p>
+                    <p class="alert-warning" <% if (!low) { %>hidden <% } %> >  La valeur de l'objet est plus basse</p>
+                    <p class="alert-success" <% if (!equal) { %>hidden<% } %> > Félicitations ! Tu as trouvé la bonne valeur en seulement tentative(s)</p>
 
                 </div>
 
