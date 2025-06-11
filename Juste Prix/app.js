@@ -83,10 +83,10 @@ app.post('/game/check', (req, res) => {
         req.session.essais += 1;
     }else if(guess>goodResponse){
         req.session.low = true;
-        req.session.essais += 1;
+        req.session.essais ++;
     }else if(guess == goodResponse){
         req.session.equal = true;
-        req.session.essais += 1;
+        req.session.essais ++;
     };
     res.render('game',
         {
