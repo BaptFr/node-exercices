@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = require('./models/user')
 
 //Pour l'exercice pas de .env
-mongoose.connect('mongodb+srv://baptiste:baptiste@cluster0.tl8mlhc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('')
 .then(() => console.log('Connexion à MongoDB réussie !'))
 .catch(() => console.log('Connexion à MongoDB échouée !'));
 
