@@ -23,10 +23,10 @@ let user2 = new User({
 //     .then((data) => console.log(data))
 //     .catch((error) => console.log(error));
 
-//Récupère x1 objet
-User.findOne({_id:"684a8b5000c124e6fbddd2b8" })
-    .then((data) => console.log(data))
-    .catch((error) => console.log(error));
+// //Récupère x1 objet
+// User.findOne({_id:"684a8b5000c124e6fbddd2b8" })
+//     .then((data) => console.log(data))
+//     .catch((error) => console.log(error));
 
 // //Màj x1 objet
 // User.updateOne({_id:""}, {password:""})
